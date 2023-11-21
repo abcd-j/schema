@@ -27,6 +27,13 @@ imports:
   # - classes/publication
 
 classes:
+  Container:
+    tree_root: true
+    attributes:
+      datasets:
+        multivalued: true
+        inlined_as_list: true
+        range: Dataset
   Dataset:
     class_uri: schema:Dataset
     description: >-
