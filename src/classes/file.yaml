@@ -1,0 +1,41 @@
+---
+id: https://w3id.org/abcdj/file
+name: abcdj-file
+title: abcdj-file
+description: |-
+  A schema to describe an ABCD-J file
+license: MIT
+
+prefixes:
+  abcdj: https://w3id.org/abcdj/
+  afo: http://purl.allotrope.org/ontologies/result#
+  bibo: https://purl.org/ontology/bibo/
+  example: https://example.org/
+  linkml: https://w3id.org/linkml/
+  obo: https://purl.obolibrary.org/obo/
+  schema: http://schema.org/
+default_prefix: abcdj
+default_range: string
+
+imports:
+  - linkml:types
+
+classes:
+  File:
+    class_uri: schema:DigitalDocument
+    attributes:
+      checksum_md5:
+        required: false
+        slot_uri: obo:NCIT_C171276
+      path_posix:
+        required: true
+        slot_uri: afo:AFR_0001928
+      size_in_bytes:
+        required: false
+        slot_uri: schema:contentSize
+        range: integer
+        unit:
+          ucum_code: byte
+      url:
+        required: false
+        slot_uri: schema:contentUrl

@@ -1,0 +1,160 @@
+---
+id: https://w3id.org/abcdj/abcdj
+name: abcdj-schema
+title: abcdj-schema
+description: |-
+  A schema to describe ABCD-J datasets
+license: MIT
+
+prefixes:
+  abcdj: https://w3id.org/abcdj/
+  bibo: https://purl.org/ontology/bibo/
+  dcterms: https://purl.org/dc/terms/
+  dpv: https://w3id.org/dpv#
+  example: https://example.org/
+  linkml: https://w3id.org/linkml/
+  openminds: https://openminds.ebrains.eu/controlledTerms/
+  schema: http://schema.org/
+default_prefix: abcdj
+default_range: string
+
+imports:
+  - linkml:types
+  - classes/data_controller
+  - classes/file
+  # - classes/author
+  # - classes/funding
+  # - classes/publication
+
+classes:
+  Dataset:
+    attributes:
+      data_controller:
+        slot_uri: dpv:hasDataController
+        required: true
+        range: DataController
+        description: >-
+          The Person or Organization that serves as the data
+          controller of the dataset.
+      description:
+        slot_uri: schema:description
+        required: true
+        description: >-
+          General description of the dataset. It may summarize its
+          purpose, scope, content, and potential applications. If a
+          long description need to be split into paragraphs, each
+          paragraph can be put into a dedicated column in this
+          row. Language must be English.
+      doi:
+        slot_uri: bibo:doi
+        required: false
+        description: >-
+          A DOI the dataset got assigned (e.g. from a data portal it
+          was published in). The DOI should preferably point to the
+          dataset version described in the catalog record.
+      files:
+        slot_uri: dcterms:hasPart
+        multivalued: true
+        inlined_as_list: true
+        range: File
+        description: >-
+          Files that form part of the file tree of the current
+          dataset.
+      homepage:
+        slot_uri: schema:mainEntityOfPage
+        required: false
+        description: >-
+          A URL the catalog should advertise as the primary source of
+          information/data on this dataset. This could be a dataset
+          page in a data portal.
+      keywords:
+        slot_uri: schema:keywords
+        required: false
+        multivalued: true
+        inlined_as_list: true
+        description: >-
+          Keywords describing the major topical themes of the
+          dataset. Any number of keywords can be given, one keyword
+          per column. Keyword aid the discoverability of a dataset.
+      last-updated:
+        required: false
+        description: >-
+          Date of the last modification of the described dataset
+          (version), for example a release date. Must be given in ISO
+          8601 format (i.e., YYYY-MM-DD).
+      license:
+        slot_uri: schema:license
+        required: false
+        description: >-
+          A license document (URL) that applies to the dataset and
+          defines the terms and conditions for use.
+      name:
+        slot_uri: schema:name
+        required: true
+        description: >-
+          Identifies the dataset uniquely within the ABCD-J project,
+          ie there must not be different datasets of the same name.
+          The name should be suitable for a directory/folder name.
+          Spaces and special characters should be avoided.
+      sample[organism]:
+        slot_uri: openminds:Species
+        required: true
+        description: >-
+          Classification of organism(s) associated with, or studied
+          for the dataset. One or more organisms can be given, one per
+          column.  Organisms must be identified by their ID in the
+          NCBI organismal taxonomy, which can be searched at
+          https://www.ebi.ac.uk/ols4/ontologies/ncbitaxon.  For
+          example, the identifier for human or homo sapiens is
+          NCBITaxon:9606. The column value should be NCBITaxon:9606 in
+          this case.
+      sample[organism-part]:
+        slot_uri: openminds:UBERONParcellation
+        required: true
+        description: >-
+          Classification of organism part(s) associated with, or
+          studied for the dataset. One or more organism parts can be
+          given, one per column.  Organism parts must be identified by
+          their ID in the Uber-anatomy ontology (UBERON), which can be
+          searched at https://www.ebi.ac.uk/ols4/ontologies/uberon.
+          For example, the identifier for upper limb segment is
+          UBERON:0008785. The column value should be UBERON:0008785 in
+          this case.  The identifier for the brain is UBERON:0000955,
+          but more precise definitions for individual brain structures
+          are available.
+      # subdatasets:
+      #   slot_uri: dcterms:hasPart
+      #   required: false
+      #   multivalued: true
+      #   inlined_as_list: true
+      #   range: Subdataset
+      #   description: >-
+      #     Subdatasets that are versioned dependencies of the current
+      #     Dataset.
+      title:
+        slot_uri: schema:title
+        required: true
+        description: >-
+          Title to be displayed on the catalog landing page for the
+          dataset. Language must be English.
+      version:
+        slot_uri: schema:version
+        required: true
+        description: >-
+          A label that identifies the version of the dataset the
+          catalog record is describing. If a dataset is unversioned,
+          it is acceptable to state latest. Otherwise any numerical
+          label (e.g., 1.2), or text label (e.g., GITSHA 7db210fb5)
+          can be provided here. The version should change when the
+          content of the dataset changes.
+      
+
+# imports:
+#   - linkml:types
+#   - classes/file # this schema defines a class 'File'
+      
+# classes:
+#   Dataset:
+#     attributes:
+#       hasPart:
+#         range: File

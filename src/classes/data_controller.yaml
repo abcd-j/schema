@@ -1,0 +1,54 @@
+---
+id: https://w3id.org/abcdj/data-controller
+name: abcdj-data-controller
+title: abcdj-data-controller
+description: |-
+  A schema to describe an ABCD-J data controller
+license: MIT
+
+prefixes:
+  abcdj: https://w3id.org/abcdj/
+  bibo: https://purl.org/ontology/bibo/
+  example: https://example.org/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+default_prefix: abcdj
+default_range: string
+
+imports:
+  - linkml:types
+
+classes:
+  DataController:
+    attributes:
+      address:
+        required: false
+        description: >-
+          The physical address of the data controller
+      name:
+        slot_uri: schema:name
+        required: true
+        description: >-
+          The name of the Person or Organization that serves as the
+          data controller of the dataset. For a person, provide in 
+          the format <first_name> <last_name>
+      email:
+        slot_uri: schema:email
+        required: true
+        description: >-
+          The email adress at which the data controller is reachable
+          for requests related to the dataset.
+      type:
+        required: false
+        range: controllerType
+        description: >-
+          The type of data controller, must be one of Person or
+          Organization.
+
+enums:
+  controllerType:
+    permissible_values:
+      PERSON:
+        meaning: schema:Person
+      ORGANIZATION:
+        meaning: schema:Organization
