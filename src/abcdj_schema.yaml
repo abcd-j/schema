@@ -11,7 +11,6 @@ prefixes:
   bibo: https://purl.org/ontology/bibo/
   dcterms: https://purl.org/dc/terms/
   dpv: https://w3id.org/dpv#
-  example: https://example.org/
   linkml: https://w3id.org/linkml/
   openminds: https://openminds.ebrains.eu/controlledTerms/
   schema: http://schema.org/
@@ -22,13 +21,25 @@ imports:
   - linkml:types
   - classes/data_controller
   - classes/file
-  # - classes/author
+  - classes/author
+  - classes/subdataset
   # - classes/funding
   # - classes/publication
 
 classes:
   Dataset:
+    class_uri: schema:Dataset
+    description: >-
+      A dataset in the ABCD-J catalog
     attributes:
+      authors:
+        slot_uri: schema:author
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: Author
+        description: >-
+          The Authors of the Dataset
       data_controller:
         slot_uri: dpv:hasDataController
         required: true
@@ -54,6 +65,7 @@ classes:
           dataset version described in the catalog record.
       files:
         slot_uri: dcterms:hasPart
+        required: false
         multivalued: true
         inlined_as_list: true
         range: File
@@ -122,15 +134,15 @@ classes:
           this case.  The identifier for the brain is UBERON:0000955,
           but more precise definitions for individual brain structures
           are available.
-      # subdatasets:
-      #   slot_uri: dcterms:hasPart
-      #   required: false
-      #   multivalued: true
-      #   inlined_as_list: true
-      #   range: Subdataset
-      #   description: >-
-      #     Subdatasets that are versioned dependencies of the current
-      #     Dataset.
+      subdatasets:
+        slot_uri: dcterms:hasPart
+        required: false
+        multivalued: true
+        inlined_as_list: true
+        range: Subdataset
+        description: >-
+          Datasets that are versioned dependencies of the current
+          Dataset.
       title:
         slot_uri: schema:title
         required: true
@@ -147,14 +159,3 @@ classes:
           label (e.g., 1.2), or text label (e.g., GITSHA 7db210fb5)
           can be provided here. The version should change when the
           content of the dataset changes.
-      
-
-# imports:
-#   - linkml:types
-#   - classes/file # this schema defines a class 'File'
-      
-# classes:
-#   Dataset:
-#     attributes:
-#       hasPart:
-#         range: File

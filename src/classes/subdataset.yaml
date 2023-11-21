@@ -1,0 +1,48 @@
+---
+id: https://w3id.org/abcdj/subdataset
+name: abcdj-subdataset
+title: abcdj-subdataset
+description: |-
+  A schema to describe an ABCD-J subdataset
+license: MIT
+
+prefixes:
+  abcdj: https://w3id.org/abcdj/
+  afo: http://purl.allotrope.org/ontologies/result#
+  linkml: https://w3id.org/linkml/
+  obo: https://purl.obolibrary.org/obo/
+  schema: http://schema.org/
+default_prefix: abcdj
+default_range: string
+
+imports:
+  - linkml:types
+
+classes:
+  Subdataset:
+    class_uri: schema:Dataset
+    description: >-
+      A Dataset that is a versioned dependency of a parent
+      Dataset.
+    attributes:
+      identifier:
+        slot_uri: schema:identifier
+        required: true
+        description: >-
+          The unique identifier for the Dataset.
+      path_posix:
+        slot_uri: afo:AFR_0001928
+        required: true
+        description: >-
+          The path of the Subdataset relative to the root of the
+          parent Dataset.
+      version:
+        slot_uri: schema:version
+        required: true
+        description: >-
+          A label that identifies the version of the Subataset.
+      url:
+        slot_uri: schema:contentUrl
+        required: false
+        description: >-
+          The location where the Subdataset is accessible.

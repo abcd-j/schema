@@ -9,8 +9,6 @@ license: MIT
 prefixes:
   abcdj: https://w3id.org/abcdj/
   afo: http://purl.allotrope.org/ontologies/result#
-  bibo: https://purl.org/ontology/bibo/
-  example: https://example.org/
   linkml: https://w3id.org/linkml/
   obo: https://purl.obolibrary.org/obo/
   schema: http://schema.org/
@@ -23,19 +21,31 @@ imports:
 classes:
   File:
     class_uri: schema:DigitalDocument
+    description: >-
+      A file that forms part of the file tree of a Dataset.
     attributes:
       checksum_md5:
-        required: false
         slot_uri: obo:NCIT_C171276
-      path_posix:
-        required: true
-        slot_uri: afo:AFR_0001928
-      size_in_bytes:
         required: false
+        description: >-
+          The checksum of the file's content, calculated using an
+          MD5 hashing algorithm.
+      path_posix:
+        slot_uri: afo:AFR_0001928
+        required: true
+        description: >-
+          The path of the file relative to the root of the Dataset,
+          provided in the POSIX format.
+      size_in_bytes:
         slot_uri: schema:contentSize
+        required: false
+        description: >-
+          The size of the file in bytes.
         range: integer
         unit:
           ucum_code: byte
       url:
-        required: false
         slot_uri: schema:contentUrl
+        required: false
+        description: >-
+          The location where the file content is accessible.

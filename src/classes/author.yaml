@@ -1,0 +1,48 @@
+---
+id: https://w3id.org/abcdj/author
+name: abcdj-author
+title: abcdj-author
+description: |-
+  A schema to describe an ABCD-J author
+license: MIT
+
+prefixes:
+  abcdj: https://w3id.org/abcdj/
+  linkml: https://w3id.org/linkml/
+  obo: https://purl.obolibrary.org/obo/
+  schema: http://schema.org/
+default_prefix: abcdj
+default_range: string
+
+imports:
+  - linkml:types
+
+classes:
+  Author:
+    class_uri: schema:Person
+    description: >-
+      An author of the Dataset or of a Publication linked to the
+      Dataset.
+    attributes:
+      affiliation:
+        slot_uri: schema:affiliation
+        required: false
+        description: >-
+          The author's affiliation to a group, institution, or
+          employer.
+      email:
+        slot_uri: schema:email
+        required: false
+        description: >-
+          The author's email address.
+      name:
+        slot_uri: schema:name
+        required: true
+        description: >-
+          The author's name in the format <givenName> <familyName>.
+      orcid:
+        slot_uri: obo:IAO_0000708
+        required: false
+        description: >-
+          The path of the file relative to the root of the Dataset,
+          provided in the POSIX format.

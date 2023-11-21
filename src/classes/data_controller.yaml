@@ -8,8 +8,7 @@ license: MIT
 
 prefixes:
   abcdj: https://w3id.org/abcdj/
-  bibo: https://purl.org/ontology/bibo/
-  example: https://example.org/
+  dpv: https://w3id.org/dpv#
   linkml: https://w3id.org/linkml/
   schema: http://schema.org/
 default_prefix: abcdj
@@ -20,8 +19,13 @@ imports:
 
 classes:
   DataController:
+    class_uri: dpv:DataController
+    description: >-
+      The Person or Organization that has legal control over the
+      dataset.
     attributes:
       address:
+        slot_uri: schema:address
         required: false
         description: >-
           The physical address of the data controller
