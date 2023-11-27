@@ -1,0 +1,402 @@
+{
+    "$defs": {
+        "Author": {
+            "additionalProperties": false,
+            "description": "An author of the Dataset or of a Publication linked to the Dataset.",
+            "properties": {
+                "affiliation": {
+                    "description": "The author's affiliation to a group, institution, or employer.",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "The author's email address.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The author's name in the format <givenName> <familyName>.",
+                    "type": "string"
+                },
+                "orcid": {
+                    "description": "The ORCID identifier of the author, see: https://orcid.org/.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "Author",
+            "type": "object"
+        },
+        "ControllerType": {
+            "description": "",
+            "enum": [
+                "PERSON",
+                "ORGANIZATION"
+            ],
+            "title": "ControllerType",
+            "type": "string"
+        },
+        "DataController": {
+            "additionalProperties": false,
+            "description": "The Person or Organization that has legal control over the dataset.",
+            "properties": {
+                "address": {
+                    "description": "The physical address of the data controller",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "The email adress at which the data controller is reachable for requests related to the dataset.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of the Person or Organization that serves as the data controller of the dataset. For a person, provide in  the format <first_name> <last_name>",
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/$defs/ControllerType",
+                    "description": "The type of data controller, must be one of Person or Organization."
+                }
+            },
+            "required": [
+                "name",
+                "email"
+            ],
+            "title": "DataController",
+            "type": "object"
+        },
+        "Dataset": {
+            "additionalProperties": false,
+            "description": "A dataset in the ABCD-J catalog",
+            "properties": {
+                "authors": {
+                    "description": "The Authors of the Dataset",
+                    "items": {
+                        "$ref": "#/$defs/Author"
+                    },
+                    "type": "array"
+                },
+                "data_controller": {
+                    "$ref": "#/$defs/DataController",
+                    "description": "The Person or Organization that serves as the data controller of the dataset."
+                },
+                "description": {
+                    "description": "General description of the dataset. It may summarize its purpose, scope, content, and potential applications. If a long description need to be split into paragraphs, each paragraph can be put into a dedicated column in this row. Language must be English.",
+                    "type": "string"
+                },
+                "doi": {
+                    "description": "A DOI the dataset got assigned (e.g. from a data portal it was published in). The DOI should preferably point to the dataset version described in the catalog record.",
+                    "type": "string"
+                },
+                "files": {
+                    "description": "Files that form part of the file tree of the current dataset.",
+                    "items": {
+                        "$ref": "#/$defs/File"
+                    },
+                    "type": "array"
+                },
+                "funding": {
+                    "description": "All sources of funding that made it possible for this Dataset to exist",
+                    "items": {
+                        "$ref": "#/$defs/Grant"
+                    },
+                    "type": "array"
+                },
+                "homepage": {
+                    "description": "A URL the catalog should advertise as the primary source of information/data on this dataset. This could be a dataset page in a data portal.",
+                    "type": "string"
+                },
+                "keywords": {
+                    "description": "Keywords describing the major topical themes of the dataset and that aid the discoverability of a dataset. Any number of keywords can be given.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "last_updated": {
+                    "description": "Date of the last modification of the described dataset (version), for example a release date. Must be given in ISO 8601 format (i.e., YYYY-MM-DD).",
+                    "type": "string"
+                },
+                "license": {
+                    "description": "A license document (URL) that applies to the dataset and defines the terms and conditions for use.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Identifies the dataset uniquely within the ABCD-J project, ie there must not be different datasets of the same name. The name should be suitable for a directory/folder name. Spaces and special characters should be avoided.",
+                    "type": "string"
+                },
+                "publications": {
+                    "description": "All publications (articles, books, software, etc.) associated with this Dataset.",
+                    "items": {
+                        "$ref": "#/$defs/Publication"
+                    },
+                    "type": "array"
+                },
+                "sample[organism]": {
+                    "description": "Classification of organism(s) associated with, or studied for the dataset. One or more organisms can be given, one per column. Organisms must be identified by their ID in the NCBI organismal taxonomy, which can be searched at https://www.ebi.ac.uk/ols4/ontologies/ncbitaxon. For example, the identifier for human or homo sapiens is NCBITaxon:9606. The column value should be NCBITaxon:9606 in this case.",
+                    "type": "string"
+                },
+                "sample[organism_part]": {
+                    "description": "Classification of organism part(s) associated with, or studied for the dataset. One or more organism parts can be given, one per column. Organism parts must be identified by their ID in the Uber-anatomy ontology (UBERON), which can be searched at https://www.ebi.ac.uk/ols4/ontologies/uberon. For example, the identifier for upper limb segment is UBERON:0008785. The column value should be UBERON:0008785 in this case. The identifier for the brain is UBERON:0000955, but more precise definitions for individual brain structures are available.",
+                    "type": "string"
+                },
+                "subdatasets": {
+                    "description": "Datasets that are versioned dependencies of the current Dataset.",
+                    "items": {
+                        "$ref": "#/$defs/Subdataset"
+                    },
+                    "type": "array"
+                },
+                "title": {
+                    "description": "Title to be displayed on the catalog landing page for the dataset. Language must be English.",
+                    "type": "string"
+                },
+                "version": {
+                    "description": "A label that identifies the version of the dataset the catalog record is describing. If a dataset is unversioned, it is acceptable to state latest. Otherwise any numerical label (e.g., 1.2), or text label (e.g., GITSHA 7db210fb5) can be provided here. The version should change when the content of the dataset changes.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "authors",
+                "data_controller",
+                "description",
+                "funding",
+                "name",
+                "sample[organism]",
+                "sample[organism_part]",
+                "title",
+                "version"
+            ],
+            "title": "Dataset",
+            "type": "object"
+        },
+        "DatasetType": {
+            "description": "",
+            "enum": [
+                "DATALAD",
+                "OTHER"
+            ],
+            "title": "DatasetType",
+            "type": "string"
+        },
+        "File": {
+            "additionalProperties": false,
+            "description": "A file that forms part of the file tree of a Dataset.",
+            "properties": {
+                "checksum_md5": {
+                    "description": "The checksum of the file's content, calculated using an MD5 hashing algorithm.",
+                    "type": "string"
+                },
+                "path_posix": {
+                    "description": "The path of the file relative to the root of the Dataset, provided in the POSIX format.",
+                    "type": "string"
+                },
+                "size_in_bytes": {
+                    "description": "The size of the file in bytes.",
+                    "type": "integer"
+                },
+                "url": {
+                    "description": "The location where the file content is accessible.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "path_posix"
+            ],
+            "title": "File",
+            "type": "object"
+        },
+        "Grant": {
+            "additionalProperties": false,
+            "description": "A grant that funded the process of creating a Dataset.",
+            "properties": {
+                "funder": {
+                    "description": "The funder that provided the financial resources contained in the grant",
+                    "type": "string"
+                },
+                "grant_id": {
+                    "description": "The name and/or code that uniquely identifies the grant",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "A persistent URI for the specific grant",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "grant_id"
+            ],
+            "title": "Grant",
+            "type": "object"
+        },
+        "Publication": {
+            "additionalProperties": false,
+            "description": "A publication (for example of an article, book, or software) that is associated with a Dataset.",
+            "properties": {
+                "citation": {
+                    "description": "The full text-based citation providing",
+                    "type": "string"
+                },
+                "date": {
+                    "description": "The date on which the work was published. Must be given in ISO 8601 format (i.e., YYYY-MM-DD).",
+                    "type": "string"
+                },
+                "doi": {
+                    "description": "A DOI the publication got assigned, for example from the outlet that published it",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "An online location where the publication can be accessed.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "citation",
+                "doi",
+                "date"
+            ],
+            "title": "Publication",
+            "type": "object"
+        },
+        "Subdataset": {
+            "additionalProperties": false,
+            "description": "A Dataset that is a versioned dependency of a parent Dataset.",
+            "properties": {
+                "dataset_type": {
+                    "$ref": "#/$defs/DatasetType",
+                    "description": "The type of subdataset, must be one of DataLad or Other. If DataLad is specified, the accompanying identifier and version will be taken as the id and version of a DataLad dataset. If not, a unique id and version will be minted from the provided identifier and version."
+                },
+                "identifier": {
+                    "description": "The unique identifier for the Dataset.",
+                    "type": "string"
+                },
+                "path_posix": {
+                    "description": "The path of the Subdataset relative to the root of the parent Dataset.",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "The location where the Subdataset is accessible.",
+                    "type": "string"
+                },
+                "version": {
+                    "description": "A label that identifies the version of the Subataset.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "dataset_type",
+                "identifier",
+                "path_posix",
+                "version"
+            ],
+            "title": "Subdataset",
+            "type": "object"
+        }
+    },
+    "$id": "https://w3id.org/abcdj/abcdj",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": true,
+    "description": "A dataset in the ABCD-J catalog",
+    "metamodel_version": "1.7.0",
+    "properties": {
+        "authors": {
+            "description": "The Authors of the Dataset",
+            "items": {
+                "$ref": "#/$defs/Author"
+            },
+            "type": "array"
+        },
+        "data_controller": {
+            "$ref": "#/$defs/DataController",
+            "description": "The Person or Organization that serves as the data controller of the dataset."
+        },
+        "description": {
+            "description": "General description of the dataset. It may summarize its purpose, scope, content, and potential applications. If a long description need to be split into paragraphs, each paragraph can be put into a dedicated column in this row. Language must be English.",
+            "type": "string"
+        },
+        "doi": {
+            "description": "A DOI the dataset got assigned (e.g. from a data portal it was published in). The DOI should preferably point to the dataset version described in the catalog record.",
+            "type": "string"
+        },
+        "files": {
+            "description": "Files that form part of the file tree of the current dataset.",
+            "items": {
+                "$ref": "#/$defs/File"
+            },
+            "type": "array"
+        },
+        "funding": {
+            "description": "All sources of funding that made it possible for this Dataset to exist",
+            "items": {
+                "$ref": "#/$defs/Grant"
+            },
+            "type": "array"
+        },
+        "homepage": {
+            "description": "A URL the catalog should advertise as the primary source of information/data on this dataset. This could be a dataset page in a data portal.",
+            "type": "string"
+        },
+        "keywords": {
+            "description": "Keywords describing the major topical themes of the dataset and that aid the discoverability of a dataset. Any number of keywords can be given.",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "last_updated": {
+            "description": "Date of the last modification of the described dataset (version), for example a release date. Must be given in ISO 8601 format (i.e., YYYY-MM-DD).",
+            "type": "string"
+        },
+        "license": {
+            "description": "A license document (URL) that applies to the dataset and defines the terms and conditions for use.",
+            "type": "string"
+        },
+        "name": {
+            "description": "Identifies the dataset uniquely within the ABCD-J project, ie there must not be different datasets of the same name. The name should be suitable for a directory/folder name. Spaces and special characters should be avoided.",
+            "type": "string"
+        },
+        "publications": {
+            "description": "All publications (articles, books, software, etc.) associated with this Dataset.",
+            "items": {
+                "$ref": "#/$defs/Publication"
+            },
+            "type": "array"
+        },
+        "sample[organism]": {
+            "description": "Classification of organism(s) associated with, or studied for the dataset. One or more organisms can be given, one per column. Organisms must be identified by their ID in the NCBI organismal taxonomy, which can be searched at https://www.ebi.ac.uk/ols4/ontologies/ncbitaxon. For example, the identifier for human or homo sapiens is NCBITaxon:9606. The column value should be NCBITaxon:9606 in this case.",
+            "type": "string"
+        },
+        "sample[organism_part]": {
+            "description": "Classification of organism part(s) associated with, or studied for the dataset. One or more organism parts can be given, one per column. Organism parts must be identified by their ID in the Uber-anatomy ontology (UBERON), which can be searched at https://www.ebi.ac.uk/ols4/ontologies/uberon. For example, the identifier for upper limb segment is UBERON:0008785. The column value should be UBERON:0008785 in this case. The identifier for the brain is UBERON:0000955, but more precise definitions for individual brain structures are available.",
+            "type": "string"
+        },
+        "subdatasets": {
+            "description": "Datasets that are versioned dependencies of the current Dataset.",
+            "items": {
+                "$ref": "#/$defs/Subdataset"
+            },
+            "type": "array"
+        },
+        "title": {
+            "description": "Title to be displayed on the catalog landing page for the dataset. Language must be English.",
+            "type": "string"
+        },
+        "version": {
+            "description": "A label that identifies the version of the dataset the catalog record is describing. If a dataset is unversioned, it is acceptable to state latest. Otherwise any numerical label (e.g., 1.2), or text label (e.g., GITSHA 7db210fb5) can be provided here. The version should change when the content of the dataset changes.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "authors",
+        "data_controller",
+        "description",
+        "funding",
+        "name",
+        "sample[organism]",
+        "sample[organism_part]",
+        "title",
+        "version"
+    ],
+    "title": "abcdj-schema",
+    "type": "object",
+    "version": "0.0.1"
+}
