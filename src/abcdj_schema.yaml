@@ -1,10 +1,11 @@
 ---
 id: https://w3id.org/abcdj/abcdj
 name: abcdj-schema
-title: abcdj-schema
+title: ABCD-J Catalog Schema
 description: |-
   A schema to describe ABCD-J datasets
 license: MIT
+version: 0.0.1
 
 prefixes:
   abcdj: https://w3id.org/abcdj/
@@ -12,6 +13,7 @@ prefixes:
   dcterms: https://purl.org/dc/terms/
   dpv: https://w3id.org/dpv#
   linkml: https://w3id.org/linkml/
+  obo: https://purl.obolibrary.org/obo/
   openminds: https://openminds.ebrains.eu/controlledTerms/
   schema: http://schema.org/
 default_prefix: abcdj
@@ -23,19 +25,20 @@ imports:
   - classes/file
   - classes/author
   - classes/subdataset
-  # - classes/funding
-  # - classes/publication
+  - classes/grant
+  - classes/publication
 
 classes:
-  Container:
-    tree_root: true
-    attributes:
-      datasets:
-        multivalued: true
-        inlined_as_list: true
-        range: Dataset
+  # Container:
+  #   tree_root: true
+  #   attributes:
+  #     datasets:
+  #       multivalued: true
+  #       inlined_as_list: true
+  #       range: Dataset
   Dataset:
     class_uri: schema:Dataset
+    tree_root: true
     description: >-
       A dataset in the ABCD-J catalog
     attributes:
@@ -79,6 +82,15 @@ classes:
         description: >-
           Files that form part of the file tree of the current
           dataset.
+      funding:
+        slot_uri: schema:Grant
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: Grant
+        description: >-
+          All sources of funding that made it possible for this
+          Dataset to exist
       homepage:
         slot_uri: schema:mainEntityOfPage
         required: false
@@ -93,8 +105,8 @@ classes:
         inlined_as_list: true
         description: >-
           Keywords describing the major topical themes of the
-          dataset. Any number of keywords can be given, one keyword
-          per column. Keyword aid the discoverability of a dataset.
+          dataset and that aid the discoverability of a dataset.
+          Any number of keywords can be given.
       last-updated:
         required: false
         description: >-
@@ -115,15 +127,24 @@ classes:
           ie there must not be different datasets of the same name.
           The name should be suitable for a directory/folder name.
           Spaces and special characters should be avoided.
+      publications:
+        slot_uri: schema:publication
+        required: false
+        multivalued: true
+        inlined_as_list: true
+        range: Publication
+        description: >-
+          All publications (articles, books, software, etc.)
+          associated with this Dataset.
       sample[organism]:
         slot_uri: openminds:Species
         required: true
         description: >-
           Classification of organism(s) associated with, or studied
           for the dataset. One or more organisms can be given, one per
-          column.  Organisms must be identified by their ID in the
+          column. Organisms must be identified by their ID in the
           NCBI organismal taxonomy, which can be searched at
-          https://www.ebi.ac.uk/ols4/ontologies/ncbitaxon.  For
+          https://www.ebi.ac.uk/ols4/ontologies/ncbitaxon. For
           example, the identifier for human or homo sapiens is
           NCBITaxon:9606. The column value should be NCBITaxon:9606 in
           this case.
@@ -133,12 +154,12 @@ classes:
         description: >-
           Classification of organism part(s) associated with, or
           studied for the dataset. One or more organism parts can be
-          given, one per column.  Organism parts must be identified by
+          given, one per column. Organism parts must be identified by
           their ID in the Uber-anatomy ontology (UBERON), which can be
           searched at https://www.ebi.ac.uk/ols4/ontologies/uberon.
           For example, the identifier for upper limb segment is
           UBERON:0008785. The column value should be UBERON:0008785 in
-          this case.  The identifier for the brain is UBERON:0000955,
+          this case. The identifier for the brain is UBERON:0000955,
           but more precise definitions for individual brain structures
           are available.
       subdatasets:

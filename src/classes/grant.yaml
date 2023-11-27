@@ -1,0 +1,44 @@
+---
+id: https://w3id.org/abcdj/grant
+name: abcdj-grant
+title: abcdj-grant
+description: |-
+  A schema to describe an ABCD-J funding source/grant
+license: MIT
+
+prefixes:
+  abcdj: https://w3id.org/abcdj/
+  afo: http://purl.allotrope.org/ontologies/result#
+  linkml: https://w3id.org/linkml/
+  obo: https://purl.obolibrary.org/obo/
+  schema: http://schema.org/
+default_prefix: abcdj
+default_range: string
+
+imports:
+  - linkml:types
+
+classes:
+  Grant:
+    class_uri: schema:Grant
+    description: >-
+      A grant that funded the process of creating a Dataset.
+    attributes:
+      funder:
+        slot_uri: schema:funder
+        required: false
+        description: >-
+          The funder that provided the financial resources
+          contained in the grant
+      grant_id:
+        slot_uri: schema:identifier
+        required: true
+        identifier: true
+        description: >-
+          The name and/or code that uniquely identifies
+          the grant
+      url:
+        slot_uri: schema:contentUrl
+        required: false
+        description: >-
+          A persistent URI for the specific grant

@@ -44,5 +44,4 @@ classes:
         slot_uri: obo:IAO_0000708
         required: false
         description: >-
-          The path of the file relative to the root of the Dataset,
-          provided in the POSIX format.
+          The ORCID identifier of the author, see: https://orcid.org/.

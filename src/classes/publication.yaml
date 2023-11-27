@@ -1,0 +1,49 @@
+---
+id: https://w3id.org/abcdj/publication
+name: abcdj-publication
+title: abcdj-publication
+description: |-
+  A schema to describe an ABCD-J publication
+license: MIT
+
+prefixes:
+  abcdj: https://w3id.org/abcdj/
+  bibo: https://purl.org/ontology/bibo/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+default_prefix: abcdj
+default_range: string
+
+imports:
+  - linkml:types
+
+classes:
+  Publication:
+    class_uri: schema:CreativeWork
+    description: >-
+      A publication (for example of an article, book, or software)
+      that is associated with a Dataset.
+    attributes:
+      citation:
+        slot_uri: schema:citation
+        required: true
+        description: >-
+          The full text-based citation providing
+      doi:
+        slot_uri: bibo:doi
+        required: true
+        identifier: true
+        description: >-
+          A DOI the publication got assigned, for example from
+          the outlet that published it
+      date:
+        slot_uri: schema:datePublished
+        required: true
+        description: >-
+          The date on which the work was published. Must be given
+          in ISO 8601 format (i.e., YYYY-MM-DD).
+      url:
+        slot_uri: schema:url
+        required: false
+        description: >-
+          An online location where the publication can be accessed.

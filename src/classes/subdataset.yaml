@@ -9,6 +9,7 @@ license: MIT
 prefixes:
   abcdj: https://w3id.org/abcdj/
   afo: http://purl.allotrope.org/ontologies/result#
+  dlco: https://concepts.datalad.org/
   linkml: https://w3id.org/linkml/
   obo: https://purl.obolibrary.org/obo/
   schema: http://schema.org/
@@ -25,6 +26,15 @@ classes:
       A Dataset that is a versioned dependency of a parent
       Dataset.
     attributes:
+      dataset_type:
+        required: true
+        range: datasetType
+        description: >-
+          The type of subdataset, must be one of DataLad or Other.
+          If DataLad is specified, the accompanying identifier and
+          version will be taken as the id and version of a DataLad
+          dataset. If not, a unique id and version will be minted
+          from the provided identifier and version.
       identifier:
         slot_uri: schema:identifier
         required: true
@@ -46,3 +56,11 @@ classes:
         required: false
         description: >-
           The location where the Subdataset is accessible.
+
+enums:
+  datasetType:
+    permissible_values:
+      DATALAD:
+        meaning: dlco:DataladDataset
+      OTHER:
+        meaning: dlco:Dataset
