@@ -39,10 +39,8 @@ jobs:
         run: |
           gen-doc -d docs src/abcdj_schema.yaml
           mkdocs build
-          gen-json-schema src/abcdj_schema.yaml > form/schema.json
-          cp -a ./form/ ./site
-          ls .site/
-          tree .site/
+          gen-json-schema src/abcdj_schema.yaml > site/schema.json
+          ls site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
